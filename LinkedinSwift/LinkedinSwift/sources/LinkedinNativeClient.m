@@ -37,7 +37,7 @@
     } else {
         
         // no cache, create a new session
-        [LISDKSessionManager createSessionWithAuth:permissions state:@"GET-ACCESS-TOKEN" showGoToAppStoreDialog:YES successBlock:^(NSString *returnState) {
+        [LISDKSessionManager createSessionWithAuth:permissions state:@"GET-ACCESS-TOKEN" showGoToAppStoreDialog:NO successBlock:^(NSString *returnState) {
             
             // refresh session
             session = [[LISDKSessionManager sharedInstance] session];
@@ -58,6 +58,15 @@
 
 - (void)requestURL:(NSString* _Nonnull)url requestType:(LinkedinSwiftRequestType* _Nonnull)requestType token:(LSLinkedinToken * _Nonnull)token success:(__nullable LinkedinSwiftRequestSuccessCallback)successCallback error:(__nullable LinkedinSwiftRequestErrorCallback)errorCallback {
     [[LISDKAPIHelper sharedInstance] getRequest:url success:^(LISDKAPIResponse *response) {
+        successCallback([[LSResponse alloc] initWithString:response.data statusCode:response.statusCode]);
+    } error:^(LISDKAPIError *error) {
+        errorCallback(error);
+    }];
+}
+
+- (void)shareOnLinkedIn:(NSString* _Nonnull)url requestType:(LinkedinSwiftRequestType* _Nonnull)requestType data:(NSData *)payload token:(LSLinkedinToken * _Nonnull)token success:(__nullable LinkedinSwiftRequestSuccessCallback)successCallback error:(__nullable LinkedinSwiftRequestErrorCallback)errorCallback {
+    
+    [[LISDKAPIHelper sharedInstance] postRequest:url body:payload success:^(LISDKAPIResponse *response) {
         successCallback([[LSResponse alloc] initWithString:response.data statusCode:response.statusCode]);
     } error:^(LISDKAPIError *error) {
         errorCallback(error);

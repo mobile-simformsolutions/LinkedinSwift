@@ -69,6 +69,18 @@ static LinkedinSwiftRequestType* _Nonnull const LinkedinSwiftRequestDELETE = @"D
  */
 - (void)logout;
 
+
+/**
+ *  Request Linkedin api
+ *
+ *  @param url         api url
+ *  @param requestType requst type, for now only support GET
+ *  @param token       LSLiknedinToken to use request the api call
+ *  @param success     callback
+ *  @param error       callback
+ */
+- (void)shareOnLinkedIn:(NSString* _Nonnull)url requestType:(LinkedinSwiftRequestType* _Nonnull)requestType data:(NSData *)payload token:(LSLinkedinToken * _Nonnull)token success:(__nullable LinkedinSwiftRequestSuccessCallback)successCallback error:(__nullable LinkedinSwiftRequestErrorCallback)errorCallback;
+
 @end
 
 

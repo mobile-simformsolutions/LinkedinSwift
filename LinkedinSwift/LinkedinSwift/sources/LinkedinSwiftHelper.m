@@ -108,6 +108,19 @@
     }
 }
 
+- (void)postOnLinkedIn:(NSString* _Nonnull)url requestType:(LinkedinSwiftRequestType* _Nonnull)requestType data:(NSData *)payload success:(__nullable LinkedinSwiftRequestSuccessCallback)successCallback error:(__nullable LinkedinSwiftRequestErrorCallback)errorCallback {
+        // Only can make request after logged in
+    if (lsAccessToken != nil) {
+        // for now only GET is needed :)
+        if ([requestType isEqualToString:LinkedinSwiftRequestPOST]) {
+            NSObject<LinkedinClient> *client = lsAccessToken.isFromMobileSDK ? nativeClient : webClient;
+            [client shareOnLinkedIn:url requestType:requestType data:payload token:lsAccessToken success:^(LSResponse * _Nonnull response) {
+            } error:^(NSError * _Nonnull error) {
+            }];
+        }
+    }
+}
+
 #pragma mark -
 #pragma mark Static functions
 
@@ -121,6 +134,7 @@
 }
 
 + (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
     return [self isLinkedinAppInstalled] && [LISDKCallbackHandler application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 
