@@ -87,6 +87,9 @@
  */
 - (void)logout;
 
+/**
+ This method is used for the share on the LinkedIn.
+ */
 - (void)postOnLinkedIn:(NSString* _Nonnull)url requestType:(LinkedinSwiftRequestType* _Nonnull)requestType data:(NSData *_Nullable)payload success:(__nullable LinkedinSwiftRequestSuccessCallback)successCallback error:(__nullable LinkedinSwiftRequestErrorCallback)errorCallback;
 
 @end
